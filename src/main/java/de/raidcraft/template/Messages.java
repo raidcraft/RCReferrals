@@ -15,8 +15,8 @@ public final class Messages {
     private Messages() {}
 
     public static void send(UUID playerId, Component message) {
-        if (PluginTemplate.isTesting()) return;
-        BukkitAudiences.create(PluginTemplate.instance())
+        if (RCReferrals.isTesting()) return;
+        BukkitAudiences.create(RCReferrals.instance())
                 .player(playerId)
                 .sendMessage(message);
     }

@@ -8,7 +8,7 @@ import org.bukkit.event.HandlerList;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public abstract class RCTemplateEvent extends Event {
+public abstract class RCReferralEvent extends Event {
     @Getter
     private static final HandlerList handlerList = new HandlerList();
 }

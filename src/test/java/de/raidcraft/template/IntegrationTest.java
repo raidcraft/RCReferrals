@@ -8,13 +8,13 @@ import org.junit.jupiter.api.*;
 public class IntegrationTest {
 
     private ServerMock server;
-    private PluginTemplate plugin;
+    private RCReferrals plugin;
 
     @BeforeEach
     void setUp() {
 
         this.server = MockBukkit.mock();
-        this.plugin = MockBukkit.load(PluginTemplate.class);
+        this.plugin = MockBukkit.load(RCReferrals.class);
     }
 
     @AfterEach
