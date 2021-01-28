@@ -1,4 +1,4 @@
-package de.raidcraft.template;
+package de.raidcraft.referrals;
 
 public class ReferralException extends Exception {
 

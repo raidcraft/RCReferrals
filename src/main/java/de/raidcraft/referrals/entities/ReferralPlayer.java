@@ -1,6 +1,5 @@
-package de.raidcraft.template.entities;
+package de.raidcraft.referrals.entities;
 
-import io.artframework.conf.Constants;
 import io.ebean.Finder;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -77,7 +76,7 @@ public class ReferralPlayer extends BaseEntity {
     /**
      * The referral that brought the player to the server.
      */
-    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "player", orphanRemoval = true, cascade = CascadeType.ALL)
     private Referral referral;
 
     /**

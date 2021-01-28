@@ -1,7 +1,7 @@
-package de.raidcraft.template.commands;
+package de.raidcraft.referrals.commands;
 
 import co.aikar.commands.BaseCommand;
-import de.raidcraft.template.RCReferrals;
+import de.raidcraft.referrals.RCReferrals;
 
 public class AdminCommands extends BaseCommand {
 

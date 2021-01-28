@@ -1,7 +1,8 @@
-package de.raidcraft.template.entities;
+package de.raidcraft.referrals.entities;
 
-import de.raidcraft.template.ReferralException;
-import de.raidcraft.template.events.PlayerReferredByPlayerEvent;
+import de.raidcraft.referrals.Constants;
+import de.raidcraft.referrals.ReferralException;
+import de.raidcraft.referrals.events.PlayerReferredByPlayerEvent;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -31,7 +32,7 @@ public class Referral extends BaseEntity {
     public static Referral create(@NonNull ReferralPlayer referral, @NonNull ReferralPlayer referredBy) throws ReferralException {
 
         if (referral.referral() != null) {
-            throw new ReferralException("Der Spieler wurde bereits empfohlen.");
+            throw new ReferralException("Du hast bereits angegeben woher du uns kennst.");
         }
 
         PlayerReferredByPlayerEvent event = new PlayerReferredByPlayerEvent(referral, referredBy);
@@ -41,16 +42,17 @@ public class Referral extends BaseEntity {
             throw new ReferralException("Die Empfehlung wurde durch ein Plugin verhindert.");
         }
 
-        Referral ref = new Referral(referral, referredBy);
-        ref.save();
+        Referral ref = new Referral(referral, referredBy).reason(Constants.PLAYER_REASON);
+        ref.insert();
 
         return ref;
     }
 
-    @OneToOne(mappedBy = "referral")
+    @OneToOne
     private ReferralPlayer player;
     @ManyToOne
     private ReferralPlayer referredBy;
+    private String reason;
 
     public Referral(ReferralPlayer player, ReferralPlayer referredBy) {
         this.player = player;

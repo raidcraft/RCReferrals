@@ -1,11 +1,11 @@
-package de.raidcraft.template;
+package de.raidcraft.referrals;
 
 import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.PaperCommandManager;
 import com.google.common.base.Strings;
-import de.raidcraft.template.commands.AdminCommands;
-import de.raidcraft.template.commands.PlayerCommands;
-import de.raidcraft.template.entities.ReferralPlayer;
+import de.raidcraft.referrals.commands.AdminCommands;
+import de.raidcraft.referrals.commands.PlayerCommands;
+import de.raidcraft.referrals.entities.ReferralPlayer;
 import io.ebean.Database;
 import kr.entree.spigradle.annotations.PluginMain;
 import lombok.AccessLevel;

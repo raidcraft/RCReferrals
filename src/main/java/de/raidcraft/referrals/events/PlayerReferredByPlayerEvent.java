@@ -1,6 +1,6 @@
-package de.raidcraft.template.events;
+package de.raidcraft.referrals.events;
 
-import de.raidcraft.template.entities.ReferralPlayer;
+import de.raidcraft.referrals.entities.ReferralPlayer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

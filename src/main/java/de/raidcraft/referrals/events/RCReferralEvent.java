@@ -1,4 +1,4 @@
-package de.raidcraft.template.events;
+package de.raidcraft.referrals.events;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

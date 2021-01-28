@@ -1,4 +1,4 @@
-package de.raidcraft.template;
+package de.raidcraft.referrals;
 
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;

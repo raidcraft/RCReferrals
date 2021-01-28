@@ -1,4 +1,4 @@
-package de.raidcraft.template.commands;
+package de.raidcraft.referrals.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.ConditionFailedException;
@@ -6,16 +6,16 @@ import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Subcommand;
-import de.raidcraft.template.RCReferrals;
-import de.raidcraft.template.ReferralException;
-import de.raidcraft.template.entities.Referral;
-import de.raidcraft.template.entities.ReferralPlayer;
+import de.raidcraft.referrals.RCReferrals;
+import de.raidcraft.referrals.ReferralException;
+import de.raidcraft.referrals.entities.Referral;
+import de.raidcraft.referrals.entities.ReferralPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.net.InetSocketAddress;
 
-@CommandAlias("empfehlungen|empfehlung|referral|referrals|rcreferrals")
+@CommandAlias("ref|empfehlungen|empfehlung|referral|referrals|rcreferrals")
 public class PlayerCommands extends BaseCommand {
 
     private final RCReferrals plugin;
@@ -25,8 +25,8 @@ public class PlayerCommands extends BaseCommand {
     }
 
     @Default
-    @CommandAlias("empfohlen|empfohlenvon|referredby|referred")
-    @Subcommand("von|by")
+    @CommandAlias("refby|empfohlen|empfohlenvon|referredby|referred")
+    @Subcommand("by|von")
     @CommandCompletion("@rplayers")
     public void refered(ReferralPlayer referredBy) {
 
@@ -40,9 +40,12 @@ public class PlayerCommands extends BaseCommand {
             throw new ConditionFailedException("Du hast bereits einen Spieler der dich empfohlen hat angegeben.");
         }
 
-        InetSocketAddress address = player.getAddress();
-        if (address != null) {
-            referrer.lastIpAddress(address.toString()).save();
+        try {
+            InetSocketAddress address = player.getAddress();
+            if (address != null) {
+                referrer.lastIpAddress(address.toString()).save();
+            }
+        } catch (Exception ignored) {
         }
 
         try {
