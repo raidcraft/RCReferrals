@@ -43,11 +43,11 @@ public class IntegrationTest {
 
         @Nested
         @DisplayName("/ref")
-        class AdminCommands {
+        class PlayerCommands {
 
             @Nested
             @DisplayName("by")
-            class add {
+            class refby {
 
                 @Test
                 @DisplayName("should work")

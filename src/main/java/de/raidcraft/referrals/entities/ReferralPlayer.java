@@ -1,6 +1,7 @@
 package de.raidcraft.referrals.entities;
 
 import io.ebean.Finder;
+import io.ebean.annotation.WhenCreated;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -83,6 +85,9 @@ public class ReferralPlayer extends BaseEntity {
      * The last known ip address of the player.
      */
     private String lastIpAddress;
+
+    @WhenCreated
+    private Instant firstJoin;
 
     /**
      * The list of referrals this player made.

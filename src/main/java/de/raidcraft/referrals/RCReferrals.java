@@ -5,7 +5,10 @@ import co.aikar.commands.PaperCommandManager;
 import com.google.common.base.Strings;
 import de.raidcraft.referrals.commands.AdminCommands;
 import de.raidcraft.referrals.commands.PlayerCommands;
+import de.raidcraft.referrals.entities.Referral;
 import de.raidcraft.referrals.entities.ReferralPlayer;
+import de.raidcraft.referrals.entities.ReferralType;
+import de.raidcraft.referrals.listener.PlayerListener;
 import io.ebean.Database;
 import kr.entree.spigradle.annotations.PluginMain;
 import lombok.AccessLevel;
@@ -21,6 +24,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
 
 import java.io.File;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @PluginMain
@@ -36,6 +40,7 @@ public class RCReferrals extends JavaPlugin {
     private PluginConfig pluginConfig;
 
     private PaperCommandManager commandManager;
+    private PlayerListener playerListener;
 
     @Getter
     private static boolean testing = false;
@@ -70,11 +75,30 @@ public class RCReferrals extends JavaPlugin {
         getDataFolder().mkdirs();
         pluginConfig = new PluginConfig(new File(getDataFolder(), "config.yml").toPath());
         pluginConfig.loadAndSave();
+
+        for (Map.Entry<String, PluginConfig.ReferralType> entry : pluginConfig.getTypes().entrySet()) {
+            ReferralType.find.query()
+                    .where().eq("identifier", entry.getKey())
+                    .findOneOrEmpty()
+                    .orElse(new ReferralType())
+                    .identifier(entry.getKey())
+                    .name(entry.getValue().getName())
+                    .description(entry.getValue().getDescription())
+                    .active(entry.getValue().isActive())
+                    .save();
+        }
+
+        database.updateAll(ReferralType.find.query()
+                .where().notIn("identifier", pluginConfig.getTypes().keySet())
+                .findList()
+                .stream().map(referralType -> referralType.active(false))
+                .collect(Collectors.toList()));
     }
 
     private void setupListener() {
 
-
+        playerListener = new PlayerListener(this);
+        getServer().getPluginManager().registerEvents(playerListener, this);
     }
 
     private void setupCommands() {
@@ -109,7 +133,9 @@ public class RCReferrals extends JavaPlugin {
 
         this.database = new EbeanWrapper(Config.builder(this)
                 .entities(
-                        // TODO: add your database entities here
+                        Referral.class,
+                        ReferralPlayer.class,
+                        ReferralType.class
                 )
                 .build()).connect();
     }
