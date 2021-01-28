@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/raidcraft/rcreferrals/compare/v1.0.0...v1.0.1) (2021-01-28)
+
+
+### Bug Fixes
+
+* update foreign key mapping ([6526dda](https://github.com/raidcraft/rcreferrals/commit/6526ddacf1ac14b7fe5550569b3d06caceffc1bb))
+
 # 1.0.0 (2021-01-28)
 
 
