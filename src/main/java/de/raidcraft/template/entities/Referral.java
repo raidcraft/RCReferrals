@@ -47,7 +47,7 @@ public class Referral extends BaseEntity {
         return ref;
     }
 
-    @OneToOne
+    @OneToOne(mappedBy = "referral")
     private ReferralPlayer player;
     @ManyToOne
     private ReferralPlayer referredBy;

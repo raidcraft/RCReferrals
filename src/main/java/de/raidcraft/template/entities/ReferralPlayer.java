@@ -77,7 +77,7 @@ public class ReferralPlayer extends BaseEntity {
     /**
      * The referral that brought the player to the server.
      */
-    @OneToOne(mappedBy = "player", orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
     private Referral referral;
 
     /**
@@ -88,7 +88,7 @@ public class ReferralPlayer extends BaseEntity {
     /**
      * The list of referrals this player made.
      */
-    @OneToMany(mappedBy = "referred_by", orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "referredBy", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Referral> referrals = new ArrayList<>();
 
     ReferralPlayer(OfflinePlayer player) {

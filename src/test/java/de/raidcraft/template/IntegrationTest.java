@@ -46,7 +46,7 @@ public class IntegrationTest {
                 @DisplayName("should work")
                 void shouldWork() {
 
-                    server.dispatchCommand(server.getConsoleSender(),"rc:template add foo " + player.getName() + " bar");
+
                 }
             }
         }
