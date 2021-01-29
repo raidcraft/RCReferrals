@@ -92,6 +92,7 @@ public class RCReferrals extends JavaPlugin {
 
         rewardListener = new RewardListener(this, scope);
         rewardListener.load();
+        getServer().getPluginManager().registerEvents(rewardListener, this);
     }
 
     public void reload() {
