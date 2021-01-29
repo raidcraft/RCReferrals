@@ -97,6 +97,7 @@ public class RCReferrals extends JavaPlugin {
     public void reload() {
 
         loadConfig();
+        referralManager.load();
         if (rewardListener != null) {
             rewardListener.load();
         }
