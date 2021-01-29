@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/raidcraft/rcreferrals/compare/v1.0.1...v1.1.0) (2021-01-29)
+
+
+### Bug Fixes
+
+* soft delete obsolete referral types ([b510fdd](https://github.com/raidcraft/rcreferrals/commit/b510fdd7007985690bb0cd6f9a1dbc4da2e97931))
+
+
+### Features
+
+* add configurable referral types ([bbc4dac](https://github.com/raidcraft/rcreferrals/commit/bbc4dac015ea05e84c7edd3fd058e6ac1da06013))
+
 ## [1.0.1](https://github.com/raidcraft/rcreferrals/compare/v1.0.0...v1.0.1) (2021-01-28)
 
 
