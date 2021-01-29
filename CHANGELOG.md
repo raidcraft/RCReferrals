@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/raidcraft/rcreferrals/compare/v1.2.2...v1.2.3) (2021-01-29)
+
+
+### Bug Fixes
+
+* add missing migrations ([62bc0d3](https://github.com/raidcraft/rcreferrals/commit/62bc0d35f2022b8d93fb2103064630f005f4a26e))
+
 ## [1.2.2](https://github.com/raidcraft/rcreferrals/compare/v1.2.1...v1.2.2) (2021-01-29)
 
 
