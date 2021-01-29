@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/raidcraft/rcreferrals/compare/v1.2.0...v1.2.1) (2021-01-29)
+
+
+### Bug Fixes
+
+* **build:** shade all of the text library ([30104f5](https://github.com/raidcraft/rcreferrals/commit/30104f5466fea5f0e4d023896295a039d64a0cbb))
+
 # [1.2.0](https://github.com/raidcraft/rcreferrals/compare/v1.1.0...v1.2.0) (2021-01-29)
 
 
