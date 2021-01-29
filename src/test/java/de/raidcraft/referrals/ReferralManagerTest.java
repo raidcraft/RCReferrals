@@ -1,8 +1,6 @@
 package de.raidcraft.referrals;
 
 import de.raidcraft.referrals.entities.ReferralType;
-import io.ebean.Model;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,14 +19,6 @@ class ReferralManagerTest extends TestBase {
 
         super.setUp();
         manager = new ReferralManager(getPlugin());
-    }
-
-    @Override
-    @AfterEach
-    void tearDown() {
-
-        super.tearDown();
-        ReferralType.all().forEach(Model::deletePermanent);
     }
 
     @Test

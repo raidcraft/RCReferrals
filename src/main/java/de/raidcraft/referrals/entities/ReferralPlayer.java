@@ -19,7 +19,7 @@ import java.util.UUID;
 
 @Entity
 @Getter
-@Setter
+@Setter(AccessLevel.PACKAGE)
 @Accessors(fluent = true)
 @Table(name = "rcreferrals_players")
 public class ReferralPlayer extends BaseEntity {
@@ -84,9 +84,11 @@ public class ReferralPlayer extends BaseEntity {
     /**
      * The last known ip address of the player.
      */
+    @Setter(AccessLevel.PUBLIC)
     private String lastIpAddress;
 
     @WhenCreated
+    @Setter(AccessLevel.PUBLIC)
     private Instant firstJoin;
 
     /**

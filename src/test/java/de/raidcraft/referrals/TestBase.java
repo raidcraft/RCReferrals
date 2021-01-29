@@ -3,6 +3,8 @@ package de.raidcraft.referrals;
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import de.raidcraft.referrals.entities.ReferralPlayer;
+import de.raidcraft.referrals.entities.ReferralType;
+import io.ebean.Model;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +29,7 @@ public abstract class TestBase {
     void tearDown() {
 
         ReferralPlayer.find.query().delete();
+        ReferralType.all().forEach(Model::deletePermanent);
         MockBukkit.unmock();
     }
 

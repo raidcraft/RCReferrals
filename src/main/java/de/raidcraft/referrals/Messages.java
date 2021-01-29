@@ -1,7 +1,6 @@
 package de.raidcraft.referrals;
 
 import co.aikar.commands.CommandIssuer;
-import de.raidcraft.referrals.commands.PlayerCommands;
 import de.raidcraft.referrals.entities.ReferralPlayer;
 import de.raidcraft.referrals.entities.ReferralType;
 import de.raidcraft.referrals.util.TimeUtil;
@@ -20,14 +19,29 @@ import java.time.Instant;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-import static de.raidcraft.referrals.Messages.Colors.*;
+import static de.raidcraft.referrals.Messages.Colors.ACCENT;
+import static de.raidcraft.referrals.Messages.Colors.HIGHLIGHT;
+import static de.raidcraft.referrals.Messages.Colors.NOTE;
+import static de.raidcraft.referrals.Messages.Colors.SUCCESS;
+import static de.raidcraft.referrals.Messages.Colors.TEXT;
+import static de.raidcraft.referrals.commands.PlayerCommands.REF_BY_PLAYER;
 import static de.raidcraft.referrals.commands.PlayerCommands.REF_BY_TYPE_COMMAND;
+import static de.raidcraft.referrals.commands.PlayerCommands.REF_CLAIM;
 import static de.raidcraft.referrals.commands.PlayerCommands.REF_COMMAND;
-import static net.kyori.adventure.text.Component.*;
+import static net.kyori.adventure.text.Component.newline;
+import static net.kyori.adventure.text.Component.text;
 import static net.kyori.adventure.text.event.ClickEvent.runCommand;
 import static net.kyori.adventure.text.event.ClickEvent.suggestCommand;
-import static net.kyori.adventure.text.format.NamedTextColor.*;
-import static net.kyori.adventure.text.format.TextDecoration.*;
+import static net.kyori.adventure.text.format.NamedTextColor.AQUA;
+import static net.kyori.adventure.text.format.NamedTextColor.DARK_AQUA;
+import static net.kyori.adventure.text.format.NamedTextColor.DARK_GREEN;
+import static net.kyori.adventure.text.format.NamedTextColor.DARK_RED;
+import static net.kyori.adventure.text.format.NamedTextColor.GOLD;
+import static net.kyori.adventure.text.format.NamedTextColor.GRAY;
+import static net.kyori.adventure.text.format.NamedTextColor.GREEN;
+import static net.kyori.adventure.text.format.NamedTextColor.RED;
+import static net.kyori.adventure.text.format.NamedTextColor.YELLOW;
+import static net.kyori.adventure.text.format.TextDecoration.BOLD;
 
 @Generated
 public final class Messages {
@@ -110,7 +124,7 @@ public final class Messages {
                         .append(text("FREUND", ACCENT)))
                         .hoverEvent(text("Klicke um den Namen deines Freundes anzugeben und ihr erhaltet beide eine ", NOTE)
                                 .append(text("Belohnung!", SUCCESS, BOLD)))
-                        .clickEvent(suggestCommand(PlayerCommands.REF_BY_PLAYER))
+                        .clickEvent(suggestCommand(REF_BY_PLAYER))
                 );
 
         for (ReferralType type : ReferralType.all()) {
@@ -123,6 +137,45 @@ public final class Messages {
         }
 
         return builder.build();
+    }
+
+    public static Component rewardsPending() {
+
+        return text().append(text("Hey cool, ein ", SUCCESS))
+                .append(text("neuer Spieler", ACCENT))
+                .append(text(" hat angegeben dass du ihn ", SUCCESS))
+                .append(text("geworben", ACCENT))
+                .append(text(" hast!", SUCCESS))
+                .append(newline())
+                .append(text("Gebe ", TEXT))
+                .append(text(REF_CLAIM, ACCENT)
+                        .clickEvent(runCommand(REF_CLAIM))
+                        .hoverEvent(text("Klicke um ", NOTE)
+                                .append(text(REF_CLAIM, ACCENT))
+                                .append(text(" auszuführen.", NOTE))
+                        )
+                )
+                .append(text(" ein um deine ", TEXT))
+                .append(text("Belohnung", SUCCESS))
+                .append(text(" abzuholen."))
+                .build();
+    }
+
+    public static Component newPlayerRewarded() {
+
+        return text().append(text("Vielen Dank dass du dir die Zeit genommen hast!", SUCCESS))
+                .append(newline())
+                .append(text("Hier ist wie versprochen deine ", TEXT))
+                .append(text("Belohnung!", SUCCESS))
+                .build();
+    }
+
+    public static Component rewardsClaimed() {
+
+        return text().append(text("Durch dein Engagement ist der Server weiter gewachsen, vielen Dank dafür!", SUCCESS))
+                .append(newline())
+                .append(text("Du hast soeben deine Belohnung erhalten. Mach weiter so und erhalte immer bessere Belohnungen für das Werben von Spielern.", NOTE))
+                .build();
     }
 
     public static Component referralNotice(Instant timeout) {

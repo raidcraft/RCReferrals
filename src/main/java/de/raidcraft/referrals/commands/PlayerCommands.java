@@ -2,21 +2,27 @@ package de.raidcraft.referrals.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.ConditionFailedException;
-import co.aikar.commands.annotation.*;
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.CommandCompletion;
+import co.aikar.commands.annotation.Default;
+import co.aikar.commands.annotation.Description;
+import co.aikar.commands.annotation.Subcommand;
 import de.raidcraft.referrals.Messages;
-import de.raidcraft.referrals.PluginConfig;
 import de.raidcraft.referrals.RCReferrals;
 import de.raidcraft.referrals.ReferralException;
 import de.raidcraft.referrals.entities.Referral;
 import de.raidcraft.referrals.entities.ReferralPlayer;
 import de.raidcraft.referrals.entities.ReferralType;
 import de.raidcraft.referrals.util.TimeUtil;
+import io.artframework.ArtContext;
+import io.ebean.Transaction;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-import java.net.InetSocketAddress;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @CommandAlias("ref|empfehlungen|empfehlung|referral|referrals|rcreferrals")
 public class PlayerCommands extends BaseCommand {
@@ -24,6 +30,7 @@ public class PlayerCommands extends BaseCommand {
     public static final String REF_COMMAND = "/ref";
     public static final String REF_BY_PLAYER = "/ref by ";
     public static final String REF_BY_TYPE_COMMAND = "/ref type ";
+    public static final String REF_CLAIM = "/ref claim";
 
     private final RCReferrals plugin;
 
@@ -36,6 +43,37 @@ public class PlayerCommands extends BaseCommand {
     public void referal() {
 
         Messages.send(getCurrentCommandIssuer(), Messages.referralChoice());
+    }
+
+    @Subcommand("claim")
+    @CommandAlias("refclaim")
+    @Description("Hole deine Belohnung für die Empfehlung von anderen Spielern ab.")
+    public void claim() {
+
+        Player player = getCurrentCommandIssuer().getIssuer();
+        ReferralPlayer referralPlayer = ReferralPlayer.of(player);
+
+        List<Referral> pendingRewards = referralPlayer.referrals()
+                .stream().filter(Referral::rewardPending)
+                .collect(Collectors.toList());
+
+        if (pendingRewards.isEmpty()) {
+            throw new ConditionFailedException("Du hast aktuell keine ausstehenden Belohnungen. Werbe andere Spieler und hole dann deine Belohnung ab.");
+        }
+
+        if (plugin.getRewardListener() != null) {
+            ArtContext playerRewards = plugin.getRewardListener().getPlayerRewards();
+            try (Transaction transaction = plugin.getDatabase().beginTransaction()) {
+                for (Referral reward : pendingRewards) {
+                    playerRewards.execute(player);
+                    reward.rewardPending(false).save();
+                }
+                transaction.commit();
+            }
+            Messages.send(player, Messages.rewardsClaimed());
+        } else {
+            getCurrentCommandIssuer().sendMessage(ChatColor.RED + "Tut uns leid bei der Verteilung der Belohnung ist etwas schief gelaufen. Bitte probiere es später nochmal.");
+        }
     }
 
     @CommandAlias("refby|empfohlen|empfohlenvon|referredby|referred")

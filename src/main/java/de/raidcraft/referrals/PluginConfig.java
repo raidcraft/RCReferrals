@@ -10,7 +10,9 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Getter
@@ -23,6 +25,10 @@ public class PluginConfig extends BukkitYamlConfiguration {
     private long loginMessageDelay = 1200;
     @ElementType(ReferralType.class)
     private Map<String, ReferralType> types = new HashMap<>();
+    @Comment("An ART list of rewards new players get when they answer how they found the server.")
+    private List<String> newPlayerRewards = new ArrayList<>();
+    @Comment("An ART list of rewards for players that referred other players")
+    private List<String> playerRewards = new ArrayList<>();
     private DatabaseConfig database = new DatabaseConfig();
 
     public PluginConfig(Path path) {

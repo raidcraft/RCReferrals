@@ -3,12 +3,19 @@ package de.raidcraft.referrals;
 import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.PaperCommandManager;
 import com.google.common.base.Strings;
+import de.raidcraft.referrals.art.ReferralCountRequirement;
+import de.raidcraft.referrals.art.ReferralTrigger;
 import de.raidcraft.referrals.commands.AdminCommands;
 import de.raidcraft.referrals.commands.PlayerCommands;
 import de.raidcraft.referrals.entities.Referral;
 import de.raidcraft.referrals.entities.ReferralPlayer;
 import de.raidcraft.referrals.entities.ReferralType;
 import de.raidcraft.referrals.listener.PlayerListener;
+import de.raidcraft.referrals.listener.RewardListener;
+import io.artframework.Scope;
+import io.artframework.annotations.ArtModule;
+import io.artframework.annotations.OnEnable;
+import io.artframework.annotations.OnLoad;
 import io.ebean.Database;
 import kr.entree.spigradle.annotations.PluginMain;
 import lombok.AccessLevel;
@@ -27,6 +34,7 @@ import java.io.File;
 import java.util.stream.Collectors;
 
 @PluginMain
+@ArtModule(value = "rcreferrals", description = "Adds requirements and trigger for player referrals.")
 public class RCReferrals extends JavaPlugin {
 
     @Getter
@@ -43,6 +51,9 @@ public class RCReferrals extends JavaPlugin {
     private ReferralManager referralManager;
     private PaperCommandManager commandManager;
     private PlayerListener playerListener;
+    @Getter
+    @Setter(AccessLevel.PACKAGE)
+    private RewardListener rewardListener;
 
     @Getter
     private static boolean testing = false;
@@ -68,9 +79,27 @@ public class RCReferrals extends JavaPlugin {
         setupCommands();
     }
 
+    @OnLoad
+    public void onLoad(Scope scope) {
+
+        scope.register()
+                .requirements().add(ReferralCountRequirement.class)
+                .trigger().add(ReferralTrigger.class);
+    }
+
+    @OnEnable
+    public void onEnable(Scope scope) {
+
+        rewardListener = new RewardListener(this, scope);
+        rewardListener.load();
+    }
+
     public void reload() {
 
         loadConfig();
+        if (rewardListener != null) {
+            rewardListener.load();
+        }
     }
 
     private void loadConfig() {
@@ -100,6 +129,9 @@ public class RCReferrals extends JavaPlugin {
                 context -> ReferralPlayer.find.all().stream()
                 .map(ReferralPlayer::name)
                 .collect(Collectors.toSet()));
+
+        commandManager.getCommandCompletions().registerAsyncCompletion("types",
+                context -> ReferralType.all().stream().map(ReferralType::identifier).collect(Collectors.toSet()));
 
         commandManager.getCommandContexts().registerIssuerAwareContext(ReferralPlayer.class, context -> {
             String name = context.popFirstArg();

@@ -24,6 +24,16 @@ types:
     description: Du bist über eine der Server Listen auf uns gestoßen.
     text: "eine "
     active: true
+# An ART list of rewards new players get when they answer how they found the server.
+new_player_rewards:
+  - '!item diamond 20'
+  - '!money 1000'
+  - '!rcskills:exp 1000'
+# An ART list of rewards for players that referred other players
+player_rewards:
+  - '!loot.create common'
+  - '?referrals >5'
+  - '!item diamond 20'
 database:
   username: sa
   password: sa
