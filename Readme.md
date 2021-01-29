@@ -13,9 +13,9 @@ A simple plugin that allows players to tell who referred them and both get rewar
 ```yaml
 # The timeout after which players cannot say why they came to the server.
 # 1h, 1d, etc.
-referral_timeout = "0s"
+referral_timeout: "0s"
 # The time in ticks to wait until posting the referral message to the player.
-login_message_delay = 1200;
+login_message_delay: 1200
 types:
   # define various referral types here
   # the player gets listed all active types and can choose
