@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/raidcraft/rcreferrals/compare/v1.3.0...v1.3.1) (2021-01-29)
+
+
+### Bug Fixes
+
+* reward listener not registered ([ea23eab](https://github.com/raidcraft/rcreferrals/commit/ea23eab9f5250ad7c0d2444e32e2553192f6fccf))
+
 # [1.3.0](https://github.com/raidcraft/rcreferrals/compare/v1.2.3...v1.3.0) (2021-01-29)
 
 
