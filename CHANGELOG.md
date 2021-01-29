@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/raidcraft/rcreferrals/compare/v1.2.1...v1.2.2) (2021-01-29)
+
+
+### Bug Fixes
+
+* **config:** provide default values in type config ([303d6a9](https://github.com/raidcraft/rcreferrals/commit/303d6a992394ae6ad0a1105b2e91a8d63d3890d0))
+
 ## [1.2.1](https://github.com/raidcraft/rcreferrals/compare/v1.2.0...v1.2.1) (2021-01-29)
 
 
