@@ -98,7 +98,7 @@ shadowJar {
     relocate 'co.aikar.commands', "shadow.${pluginName}.acf"
     relocate 'co.aikar.locales', "shadow.${pluginName}.locales"
     relocate 'de.exlll.configlib', "shadow.${pluginName}.configlib"
-    relocate 'net.kyori.adventure', "shadow.${pluginName}.adventure"
+    relocate 'net.kyori', "shadow.${pluginName}.text"
 }
 
 tasks.build.dependsOn(shadowJar)
