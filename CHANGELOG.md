@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/raidcraft/rcreferrals/compare/v1.1.0...v1.2.0) (2021-01-29)
+
+
+### Features
+
+* add rewards ([d70b20f](https://github.com/raidcraft/rcreferrals/commit/d70b20feef970dd0d75fe1f21fa02cd97960e558))
+
 # [1.1.0](https://github.com/raidcraft/rcreferrals/compare/v1.0.1...v1.1.0) (2021-01-29)
 
 
