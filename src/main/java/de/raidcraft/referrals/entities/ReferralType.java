@@ -1,6 +1,7 @@
 package de.raidcraft.referrals.entities;
 
 import io.ebean.Finder;
+import io.ebean.annotation.SoftDelete;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -11,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Entity
@@ -22,10 +24,16 @@ public class ReferralType extends BaseEntity {
 
     public static final Finder<UUID, ReferralType> find = new Finder<>(ReferralType.class);
 
-    public static List<ReferralType> activeTypes() {
+    public static Optional<ReferralType> byIdentifier(String identifier) {
 
         return find.query()
-                .where().eq("active", true)
+                .where().ieq("identifier", identifier)
+                .findOneOrEmpty();
+    }
+
+    public static List<ReferralType> all() {
+
+        return find.query()
                 .findList();
     }
 
@@ -33,7 +41,8 @@ public class ReferralType extends BaseEntity {
     private String name;
     private String description;
     private String text;
-    private boolean active = true;
+    @SoftDelete
+    private boolean deleted;
     @OneToMany
     private List<Referral> referrals = new ArrayList<>();
 }

@@ -1,34 +1,22 @@
 package de.raidcraft.referrals;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import de.raidcraft.referrals.entities.Referral;
 import de.raidcraft.referrals.entities.ReferralPlayer;
 import org.bukkit.entity.Player;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class IntegrationTest {
-
-    private ServerMock server;
-    private RCReferrals plugin;
-
-    @BeforeEach
-    void setUp() {
-
-        this.server = MockBukkit.mock();
-        this.plugin = MockBukkit.load(RCReferrals.class);
-    }
-
-    @AfterEach
-    void tearDown() {
-
-        MockBukkit.unmock();
-    }
+@SuppressWarnings("ALL")
+public class IntegrationTest extends TestBase {
 
     @Nested
     @DisplayName("Commands")
@@ -38,7 +26,7 @@ public class IntegrationTest {
 
         @BeforeEach
         void setUp() {
-            player = server.addPlayer();
+            player = getServer().addPlayer();
         }
 
         @Nested
@@ -53,8 +41,8 @@ public class IntegrationTest {
                 @DisplayName("should work")
                 void shouldWork() {
 
-                    ReferralPlayer referralPlayer = ReferralPlayer.of(server.addPlayer("foobar"));
-                    PlayerMock newPlayer = server.addPlayer();
+                    ReferralPlayer referralPlayer = referralPlayer("foobar");
+                    PlayerMock newPlayer = getServer().addPlayer();
 
                     newPlayer.performCommand("ref by " + referralPlayer.name());
 
@@ -73,6 +61,53 @@ public class IntegrationTest {
                             .asList()
                             .hasSize(1)
                             .contains(player.get().referral());
+                }
+
+                @Test
+                @DisplayName("should not allow referral of referred players")
+                void shouldNotAllowReferringWhenAlreadyReferred() {
+
+                    ReferralPlayer referralPlayer = referralPlayer("foobar");
+                    PlayerMock newPlayer = getServer().addPlayer();
+
+                    newPlayer.performCommand("ref by " + referralPlayer.name());
+
+                    ReferralPlayer second = referralPlayer("second");
+                    newPlayer.performCommand("ref by " + second.name());
+
+                    Optional<ReferralPlayer> player = ReferralPlayer.byId(newPlayer.getUniqueId());
+
+                    assertThat(player)
+                            .isPresent().get()
+                            .extracting(ReferralPlayer::referral)
+                            .isNotNull()
+                            .extracting(Referral::referredBy)
+                            .isEqualTo(referralPlayer);
+
+                    assertThat(ReferralPlayer.byId(second.id()))
+                            .isPresent().get()
+                            .extracting(ReferralPlayer::referrals)
+                            .asList()
+                            .isEmpty();
+                }
+
+                @Test
+                @DisplayName("should not allow referral after timeout")
+                void shouldNotAllowReferralWhenTimeout() {
+
+                    getPlugin().getPluginConfig().setReferralTimeout("10s");
+
+                    ReferralPlayer referralPlayer = referralPlayer("foobar");
+                    PlayerMock newPlayer = getServer().addPlayer();
+                    Optional<ReferralPlayer> player = ReferralPlayer.byId(newPlayer.getUniqueId());
+                    player.get().firstJoin(Instant.now().minus(1, ChronoUnit.MINUTES)).save();
+
+                    newPlayer.performCommand("ref by " + referralPlayer.name());
+
+                    assertThat(ReferralPlayer.byId(newPlayer.getUniqueId()))
+                            .isPresent().get()
+                            .extracting(ReferralPlayer::referral)
+                            .isNull();
                 }
             }
         }

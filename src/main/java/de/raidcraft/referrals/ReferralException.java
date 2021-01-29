@@ -1,5 +1,8 @@
 package de.raidcraft.referrals;
 
+import lombok.Generated;
+
+@Generated
 public class ReferralException extends Exception {
 
     public ReferralException(String message) {

@@ -24,7 +24,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
 
 import java.io.File;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @PluginMain
@@ -34,11 +33,14 @@ public class RCReferrals extends JavaPlugin {
     @Accessors(fluent = true)
     private static RCReferrals instance;
 
+    @Getter
     private Database database;
     @Getter
     @Setter(AccessLevel.PACKAGE)
     private PluginConfig pluginConfig;
 
+    @Getter
+    private ReferralManager referralManager;
     private PaperCommandManager commandManager;
     private PlayerListener playerListener;
 
@@ -61,6 +63,7 @@ public class RCReferrals extends JavaPlugin {
 
         loadConfig();
         setupDatabase();
+        setupReferralManager();
         setupListener();
         setupCommands();
     }
@@ -75,30 +78,18 @@ public class RCReferrals extends JavaPlugin {
         getDataFolder().mkdirs();
         pluginConfig = new PluginConfig(new File(getDataFolder(), "config.yml").toPath());
         pluginConfig.loadAndSave();
-
-        for (Map.Entry<String, PluginConfig.ReferralType> entry : pluginConfig.getTypes().entrySet()) {
-            ReferralType.find.query()
-                    .where().eq("identifier", entry.getKey())
-                    .findOneOrEmpty()
-                    .orElse(new ReferralType())
-                    .identifier(entry.getKey())
-                    .name(entry.getValue().getName())
-                    .description(entry.getValue().getDescription())
-                    .active(entry.getValue().isActive())
-                    .save();
-        }
-
-        database.updateAll(ReferralType.find.query()
-                .where().notIn("identifier", pluginConfig.getTypes().keySet())
-                .findList()
-                .stream().map(referralType -> referralType.active(false))
-                .collect(Collectors.toList()));
     }
 
     private void setupListener() {
 
         playerListener = new PlayerListener(this);
         getServer().getPluginManager().registerEvents(playerListener, this);
+    }
+
+    private void setupReferralManager() {
+
+        referralManager = new ReferralManager(this);
+        referralManager.load();
     }
 
     private void setupCommands() {
@@ -123,6 +114,12 @@ public class RCReferrals extends JavaPlugin {
                 }
                 return ReferralPlayer.of(player);
             }
+        });
+
+        commandManager.getCommandContexts().registerContext(ReferralType.class, context -> {
+            String identifier = context.popFirstArg();
+            return ReferralType.byIdentifier(identifier)
+                    .orElseThrow(() -> new InvalidCommandArgument("There is not referral type with the identifier " + identifier));
         });
 
         commandManager.registerCommand(new AdminCommands(this));

@@ -118,19 +118,19 @@ public final class TimeUtil {
         StringBuilder sb = new StringBuilder(64);
         if (days > 0) {
             sb.append(days);
-            sb.append(days > 1 ? " days " : " day ");
+            sb.append(days > 1 ? " Tage " : " Tag ");
         }
         if (hours > 0) {
             sb.append(hours);
-            sb.append(hours > 1 ? " hours " : " hour ");
+            sb.append(hours > 1 ? " Stunden " : " Stunde ");
         }
         if (minutes > 0) {
             sb.append(minutes);
-            sb.append(minutes > 1 ? " minutes " : " minute ");
+            sb.append(minutes > 1 ? " Minuten " : " Minute ");
         }
         if (seconds > 0) {
             sb.append(seconds);
-            sb.append(seconds > 1 ? " seconds " : " second ");
+            sb.append(seconds > 1 ? " Sekunden " : " Sekunde ");
         }
 
         return (sb.toString());

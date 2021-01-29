@@ -7,6 +7,7 @@ import de.exlll.configlib.configs.yaml.BukkitYamlConfiguration;
 import de.exlll.configlib.format.FieldNameFormatters;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -32,12 +33,13 @@ public class PluginConfig extends BukkitYamlConfiguration {
     @ConfigurationElement
     @Getter
     @Setter
+    @Accessors(fluent = true)
     public static class ReferralType {
 
         private String name;
         private String description;
         private String text;
-        private boolean active;
+        private boolean active = true;
     }
 
     @ConfigurationElement

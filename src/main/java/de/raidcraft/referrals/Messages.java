@@ -5,6 +5,7 @@ import de.raidcraft.referrals.commands.PlayerCommands;
 import de.raidcraft.referrals.entities.ReferralPlayer;
 import de.raidcraft.referrals.entities.ReferralType;
 import de.raidcraft.referrals.util.TimeUtil;
+import lombok.Generated;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -28,6 +29,7 @@ import static net.kyori.adventure.text.event.ClickEvent.suggestCommand;
 import static net.kyori.adventure.text.format.NamedTextColor.*;
 import static net.kyori.adventure.text.format.TextDecoration.*;
 
+@Generated
 public final class Messages {
 
     public static final class Colors {
@@ -111,7 +113,7 @@ public final class Messages {
                         .clickEvent(suggestCommand(PlayerCommands.REF_BY_PLAYER))
                 );
 
-        for (ReferralType type : ReferralType.activeTypes()) {
+        for (ReferralType type : ReferralType.all()) {
             builder.append(newline()).append(text().append(text("  - ", TEXT))
                     .append(text(type.text(), NOTE))
                     .append(text(type.name().toUpperCase(), ACCENT))
@@ -125,15 +127,15 @@ public final class Messages {
 
     public static Component referralNotice(Instant timeout) {
 
-        return text().append(text("Sage uns noch bis ", TEXT))
-                .append(text(TimeUtil.formatDateTime(timeout, "HH:mm"), HIGHLIGHT))
-                .append(text(" woher du uns kennst und erhalte eine ", TEXT))
-                .append(text("Belohnung!", SUCCESS, BOLD)
+        return text().append(text("Du hast noch ", TEXT))
+                .append(text(TimeUtil.getAccurrateFormatedTime(timeout.toEpochMilli() - Instant.now().toEpochMilli()), HIGHLIGHT))
+                .append(text(" um uns zu sagen woher du uns kennst um deine ", TEXT))
+                .append(text("Belohnung", SUCCESS, BOLD)
                         .hoverEvent(text("Was für eine Belohnung?", NOTE)
                                 .append(newline())
                                 .append(text("Sage uns wie du uns gefunden hast und finde es heraus :)", ACCENT))
                         )
-                )
+                ).append(text(" zu erhalten!", TEXT))
                 .append(newline())
                 .append(text("Klicke dafür ", NOTE))
                 .append(text("hier", ACCENT)
