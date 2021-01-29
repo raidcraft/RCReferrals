@@ -42,9 +42,9 @@ public class PluginConfig extends BukkitYamlConfiguration {
     @Accessors(fluent = true)
     public static class ReferralType {
 
-        private String name;
-        private String description;
-        private String text;
+        private String name = "n/a";
+        private String description = "n/a";
+        private String text = "n/a";
         private boolean active = true;
     }
 
