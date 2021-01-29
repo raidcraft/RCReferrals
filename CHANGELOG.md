@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/raidcraft/rcreferrals/compare/v1.2.3...v1.3.0) (2021-01-29)
+
+
+### Features
+
+* add /refadmin reload command ([5ab0722](https://github.com/raidcraft/rcreferrals/commit/5ab0722a1d101dfb5a6872342eee50a1d21bb871))
+
 ## [1.2.3](https://github.com/raidcraft/rcreferrals/compare/v1.2.2...v1.2.3) (2021-01-29)
 
 
