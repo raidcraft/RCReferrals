@@ -42,6 +42,11 @@ public class PlayerCommands extends BaseCommand {
     @Description("Sage uns wie du uns gefunden hast und erhalte eine Belohnung!")
     public void referal() {
 
+        if (ReferralPlayer.of(getCurrentCommandIssuer().getIssuer()).referral() != null) {
+            getCurrentCommandIssuer().sendMessage(ChatColor.RED + "Vielen Dank für deinen Übermut, aber du hast uns ja bereits gesagt wie du auf uns gestoßen bist.");
+            return;
+        }
+
         Messages.send(getCurrentCommandIssuer(), Messages.referralChoice());
     }
 
