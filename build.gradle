@@ -36,6 +36,7 @@ spigot {
     authors = [project.property("author")]
     apiVersion = project.property("apiVersion")
     load = STARTUP
+    softDepends = ['Plan']
     //    depends = ['']
 }
 
@@ -55,15 +56,20 @@ repositories {
     maven { url = 'https://jitpack.io' }
     spigot()
     maven { url = "https://repo.aikar.co/content/groups/aikar/" }
+    maven {
+        url  "https://dl.bintray.com/rsl1122/Plan-repository"
+    }
 }
 
 dependencies {
-    compileOnly spigot(mcVersion)
+    implementation spigot(mcVersion)
 
     implementation 'net.silthus:ebean-wrapper:2.9.1'
     implementation 'net.silthus.configlib:configlib-bukkit:2.6.0'
     implementation 'co.aikar:acf-paper:0.5.0-SNAPSHOT'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.1'
+
+    implementation 'com.djrapitops:Plan-api:5.1-R0.4'
 
     implementation 'net.kyori:adventure-api:4.5.0'
     implementation 'net.kyori:adventure-text-minimessage:4.0.0-SNAPSHOT'

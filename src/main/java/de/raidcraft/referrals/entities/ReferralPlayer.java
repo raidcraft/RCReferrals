@@ -1,6 +1,7 @@
 package de.raidcraft.referrals.entities;
 
 import io.ebean.Finder;
+import io.ebean.annotation.DbDefault;
 import io.ebean.annotation.WhenCreated;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -90,6 +91,10 @@ public class ReferralPlayer extends BaseEntity {
     @WhenCreated
     @Setter(AccessLevel.PUBLIC)
     private Instant firstJoin;
+
+    @Setter(AccessLevel.PUBLIC)
+    @DbDefault("0")
+    private long playTime;
 
     /**
      * The list of referrals this player made.

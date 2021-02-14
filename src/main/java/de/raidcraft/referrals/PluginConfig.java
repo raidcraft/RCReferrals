@@ -23,6 +23,10 @@ public class PluginConfig extends BukkitYamlConfiguration {
     private String referralTimeout = "0";
     @Comment("The time in ticks the message after the login should be delayed.")
     private long loginMessageDelay = 1200;
+    @Comment("The play time that is required for friend referrals to work.")
+    private String requiredPlayTime = "6h";
+    @Comment("The Plan activity index that is required for referrals to work.")
+    private double requiredActivityIndex = 2;
     @ElementType(ReferralType.class)
     private Map<String, ReferralType> types = new HashMap<>();
     @Comment("An ART list of rewards new players get when they answer how they found the server.")

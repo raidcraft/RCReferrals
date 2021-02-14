@@ -60,6 +60,7 @@ public class RewardListener implements Listener {
         List<Referral> pendingRewards = ReferralPlayer.of(event.getPlayer())
                 .referrals().stream()
                 .filter(Referral::rewardPending)
+                .filter(Referral::claimable)
                 .collect(Collectors.toList());
 
         if (pendingRewards.size() > 0) {
@@ -81,7 +82,7 @@ public class RewardListener implements Listener {
             Messages.send(player, Messages.newPlayerRewarded());
         }
 
-        if (playerRewards != null && event.getReferral().isPlayerReferral()) {
+        if (playerRewards != null && event.getReferral().isPlayerReferral() && event.getReferral().claimable()) {
             Messages.send(event.getReferral().referredBy().id(), Messages.rewardsPending());
         }
 

@@ -181,12 +181,13 @@ public class IntegrationTest extends TestBase {
                 }
 
                 @Test
-                @DisplayName("should be able to claim pending rewards")
+                @DisplayName("should be able to claim pending rewards only if claimable")
                 void shouldBeAbleToClaimPendingRewards() {
 
                     PlayerMock foobar = getServer().addPlayer("foobar");
                     PlayerMock newPlayer = getServer().addPlayer("new");
                     newPlayer.performCommand("ref by foobar");
+                    ReferralPlayer.of(newPlayer).referral().claimable(true).save();
 
                     foobar.performCommand("ref claim");
 

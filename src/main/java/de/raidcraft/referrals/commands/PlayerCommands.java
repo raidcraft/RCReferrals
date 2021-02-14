@@ -59,7 +59,9 @@ public class PlayerCommands extends BaseCommand {
         ReferralPlayer referralPlayer = ReferralPlayer.of(player);
 
         List<Referral> pendingRewards = referralPlayer.referrals()
-                .stream().filter(Referral::rewardPending)
+                .stream()
+                .filter(Referral::rewardPending)
+                .filter(Referral::claimable)
                 .collect(Collectors.toList());
 
         if (pendingRewards.isEmpty()) {

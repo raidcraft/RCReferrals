@@ -100,6 +100,8 @@ public class Referral extends BaseEntity {
     private ReferralType type;
     @Setter(AccessLevel.PUBLIC)
     private boolean rewardPending = true;
+    @Setter(AccessLevel.PUBLIC)
+    private boolean claimable = false;
 
     public Referral(ReferralPlayer player, ReferralPlayer referredBy) {
         this.player = player;
