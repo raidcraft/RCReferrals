@@ -1,3 +1,10 @@
+## [1.3.3](https://github.com/raidcraft/rcreferrals/compare/v1.3.2...v1.3.3) (2021-02-14)
+
+
+### Bug Fixes
+
+* require certain online time before allowing rewards to be claimed ([f93dafd](https://github.com/raidcraft/rcreferrals/commit/f93dafd257fc1e9c40f5bf27011f1ec7376b872f)), closes [#11](https://github.com/raidcraft/rcreferrals/issues/11)
+
 ## [1.3.2](https://github.com/raidcraft/rcreferrals/compare/v1.3.1...v1.3.2) (2021-01-30)
 
 
