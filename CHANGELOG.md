@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/raidcraft/rcreferrals/compare/v1.4.0...v1.5.0) (2021-02-16)
+
+
+### Features
+
+* implement promo code commands ([1c29d88](https://github.com/raidcraft/rcreferrals/commit/1c29d8876d3f6f1bfdfb2348dd4951a70407b9c8))
+
 # [1.4.0](https://github.com/raidcraft/rcreferrals/compare/v1.3.3...v1.4.0) (2021-02-16)
 
 
