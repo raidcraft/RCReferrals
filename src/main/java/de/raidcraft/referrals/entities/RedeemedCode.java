@@ -21,4 +21,9 @@ public class RedeemedCode extends BaseEntity {
     private ReferralPlayer player;
     @ManyToOne
     private PromoCode code;
+
+    public RedeemedCode(ReferralPlayer player, PromoCode code) {
+        this.player = player;
+        this.code = code;
+    }
 }

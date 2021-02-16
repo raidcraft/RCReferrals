@@ -13,10 +13,7 @@ import org.bukkit.OfflinePlayer;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Getter
@@ -102,7 +99,7 @@ public class ReferralPlayer extends BaseEntity {
     @OneToMany(mappedBy = "referredBy", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Referral> referrals = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RedeemedCode> codes = new ArrayList<>();
 
     ReferralPlayer(OfflinePlayer player) {
@@ -117,5 +114,17 @@ public class ReferralPlayer extends BaseEntity {
     public OfflinePlayer offlinePlayer() {
 
         return Bukkit.getOfflinePlayer(id());
+    }
+
+    public ReferralPlayer addCode(PromoCode code) {
+
+        if (code.hasCode(this)) {
+            return this;
+        }
+
+        codes().add(new RedeemedCode(this, code));
+        save();
+
+        return this;
     }
 }

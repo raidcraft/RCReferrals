@@ -10,9 +10,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import net.silthus.ebean.BaseEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +19,7 @@ import java.util.UUID;
 
 @Entity
 @Getter
-@Setter(AccessLevel.PACKAGE)
+@Setter
 @Accessors(fluent = true)
 @Table(name = "rcreferrals_promo_codes")
 public class PromoCode extends BaseEntity {
@@ -47,9 +45,10 @@ public class PromoCode extends BaseEntity {
     @Index(unique = true)
     private String name;
     private String description;
-    private int count;
+    private int amount;
     private Instant start;
     private Instant end;
+    private boolean enabled;
 
     PromoCode(String name) {
 
@@ -58,9 +57,9 @@ public class PromoCode extends BaseEntity {
 
     @DbJson
     @DbDefault("[]")
-    private List<String> commands = new ArrayList<>();
+    private List<String> rewards = new ArrayList<>();
 
-    @ManyToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RedeemedCode> redeemedCodes = new ArrayList<>();
 
     public boolean hasCode(ReferralPlayer player) {

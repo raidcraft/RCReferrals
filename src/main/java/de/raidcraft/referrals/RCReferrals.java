@@ -33,6 +33,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
 
 import java.io.File;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @PluginMain
@@ -157,6 +162,28 @@ public class RCReferrals extends JavaPlugin {
             return ReferralType.byIdentifier(identifier)
                     .orElseThrow(() -> new InvalidCommandArgument("There is not referral type with the identifier " + identifier));
         });
+
+        commandManager.getCommandContexts().registerContext(PromoCode.class, context -> {
+            String name = context.popFirstArg();
+            return PromoCode.find(name)
+                    .orElseThrow(() -> new InvalidCommandArgument("Es gibt keinen Code mit dem Namen: " + name));
+        });
+
+        commandManager.getCommandContexts().registerContext(Instant.class, context -> {
+            String arg = context.popFirstArg();
+            try {
+                return LocalDateTime.parse(
+                        arg,
+                        DateTimeFormatter.ofPattern("dd.MM.yyyy-HH:mm", Locale.GERMANY)
+                ).atZone(ZoneId.of("Europe/Berlin"))
+                        .toInstant();
+            } catch (Exception e) {
+                throw new InvalidCommandArgument("Der Zeitpunkt \"" + arg + "\" ist falsch formatiert: 30.03.2021-21:54");
+            }
+        });
+
+        commandManager.getCommandCompletions().registerAsyncCompletion("codes",
+                context -> PromoCode.find.all().stream().map(PromoCode::name).collect(Collectors.toSet()));
 
         commandManager.registerCommand(new AdminCommands(this));
         commandManager.registerCommand(new PlayerCommands(this));

@@ -2,22 +2,25 @@ package de.raidcraft.referrals.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.ConditionFailedException;
-import co.aikar.commands.annotation.CommandAlias;
-import co.aikar.commands.annotation.CommandCompletion;
-import co.aikar.commands.annotation.Default;
-import co.aikar.commands.annotation.Description;
-import co.aikar.commands.annotation.Subcommand;
+import co.aikar.commands.annotation.*;
 import de.raidcraft.referrals.Messages;
 import de.raidcraft.referrals.RCReferrals;
 import de.raidcraft.referrals.ReferralException;
+import de.raidcraft.referrals.entities.PromoCode;
 import de.raidcraft.referrals.entities.Referral;
 import de.raidcraft.referrals.entities.ReferralPlayer;
 import de.raidcraft.referrals.entities.ReferralType;
 import de.raidcraft.referrals.util.TimeUtil;
+import io.artframework.ART;
 import io.artframework.ArtContext;
+import io.artframework.ParseException;
 import io.ebean.Transaction;
+import me.clip.placeholderapi.PlaceholderAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+import org.checkerframework.checker.units.qual.C;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -126,6 +129,56 @@ public class PlayerCommands extends BaseCommand {
         } catch (ReferralException e) {
             getCurrentCommandIssuer().sendMessage(ChatColor.RED + "Die Empfehlung ist fehlgeschlagen: " + e.getMessage());
         }
+    }
+
+    @Subcommand("code")
+    @CommandAlias("code")
+    @CommandPermission("rcreferrals.code.claim")
+    public void code(PromoCode code) {
+
+        if (!getCurrentCommandIssuer().isPlayer()) {
+            return;
+        }
+
+        ReferralPlayer player = ReferralPlayer.of(getCurrentCommandIssuer().getIssuer());
+        if (code.hasCode(player)) {
+            throw new ConditionFailedException("Du hast diesen Code bereits eingelöst.");
+        }
+
+        if (!code.enabled()) {
+            throw new ConditionFailedException("Du kannst diesen Code nicht einlösen.");
+        }
+        if (Instant.now().isBefore(code.start())) {
+            throw new ConditionFailedException("Du kannst diesen Code erst ab dem " + TimeUtil.formatDateTime(code.start()) + " einlösen.");
+        }
+        if (Instant.now().isAfter(code.end())) {
+            throw new ConditionFailedException("Der Code ist nicht mehr gültig und kann nicht eingelöst werden.");
+        }
+
+        if (Bukkit.getPluginManager().getPlugin("art-framework") != null) {
+            try {
+                ART.load(code.id().toString(), code.rewards())
+                        .execute(getCurrentCommandIssuer().getIssuer());
+                player.addCode(code);
+            } catch (ParseException e) {
+                plugin.getLogger().warning("cannot load rewards of code " + code.name());
+                e.printStackTrace();
+                getCurrentCommandIssuer().sendMessage(ChatColor.RED + "Beim Einlösen des Codes ist ein Fehler aufgetreten. Bitte probiere es später erneut.");
+                return;
+            }
+        } else {
+            Plugin placeholderAPI = Bukkit.getPluginManager().getPlugin("PlaceholderAPI");
+            List<String> rewards = code.rewards();
+            if (placeholderAPI != null) {
+                rewards = PlaceholderAPI.setPlaceholders(getCurrentCommandIssuer().getIssuer(), rewards);
+            }
+            for (String reward : rewards) {
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), reward);
+            }
+        }
+        getCurrentCommandIssuer().sendMessage(ChatColor.YELLOW + "Du hast den Code " + ChatColor.BOLD + ChatColor.AQUA + code.name()
+                + ChatColor.RESET + ChatColor.GREEN + " eingelöst" + ChatColor.YELLOW + "!");
+
     }
 
     private void checkConditions(ReferralPlayer referrer) {
