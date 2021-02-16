@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/raidcraft/rcreferrals/compare/v1.5.0...v1.5.1) (2021-02-16)
+
+
+### Bug Fixes
+
+* **db:** generate correct migrations ([340b1f2](https://github.com/raidcraft/rcreferrals/commit/340b1f2c77c96ced0e7d39451122ca42e0245b16))
+
 # [1.5.0](https://github.com/raidcraft/rcreferrals/compare/v1.4.0...v1.5.0) (2021-02-16)
 
 
