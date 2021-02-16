@@ -102,6 +102,9 @@ public class ReferralPlayer extends BaseEntity {
     @OneToMany(mappedBy = "referredBy", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Referral> referrals = new ArrayList<>();
 
+    @OneToMany
+    private List<RedeemedCode> codes = new ArrayList<>();
+
     ReferralPlayer(OfflinePlayer player) {
 
         this.id(player.getUniqueId());

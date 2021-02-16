@@ -7,6 +7,8 @@ import de.raidcraft.referrals.art.ReferralCountRequirement;
 import de.raidcraft.referrals.art.ReferralTrigger;
 import de.raidcraft.referrals.commands.AdminCommands;
 import de.raidcraft.referrals.commands.PlayerCommands;
+import de.raidcraft.referrals.entities.PromoCode;
+import de.raidcraft.referrals.entities.RedeemedCode;
 import de.raidcraft.referrals.entities.Referral;
 import de.raidcraft.referrals.entities.ReferralPlayer;
 import de.raidcraft.referrals.entities.ReferralType;
@@ -166,7 +168,9 @@ public class RCReferrals extends JavaPlugin {
                 .entities(
                         Referral.class,
                         ReferralPlayer.class,
-                        ReferralType.class
+                        ReferralType.class,
+                        PromoCode.class,
+                        RedeemedCode.class
                 )
                 .build()).connect();
     }
