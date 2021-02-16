@@ -4,13 +4,13 @@ create table rcreferrals_promo_codes (
   name                          varchar(255),
   description                   varchar(255),
   amount                        integer not null,
-  start                         timestamptz,
-  end                           timestamptz,
+  start                         timestamp,
+  end                           timestamp,
   enabled                       boolean default false not null,
-  rewards                       json default '[]',
+  rewards                       clob default '[]',
   version                       bigint not null,
-  when_created                  timestamptz not null,
-  when_modified                 timestamptz not null,
+  when_created                  timestamp not null,
+  when_modified                 timestamp not null,
   constraint uq_rcreferrals_promo_codes_name unique (name),
   constraint pk_rcreferrals_promo_codes primary key (id)
 );
@@ -20,10 +20,14 @@ create table rcreferrals_redeemed_codes (
   player_id                     uuid,
   code_id                       uuid,
   version                       bigint not null,
-  when_created                  timestamptz not null,
-  when_modified                 timestamptz not null,
+  when_created                  timestamp not null,
+  when_modified                 timestamp not null,
   constraint pk_rcreferrals_redeemed_codes primary key (id)
 );
+
+alter table rcreferrals_referrals add column claimable boolean default false not null;
+
+alter table rcreferrals_players add column play_time bigint default 0 not null;
 
 create index ix_rcreferrals_redeemed_codes_player_id on rcreferrals_redeemed_codes (player_id);
 alter table rcreferrals_redeemed_codes add constraint fk_rcreferrals_redeemed_codes_player_id foreign key (player_id) references rcreferrals_players (id) on delete restrict on update restrict;

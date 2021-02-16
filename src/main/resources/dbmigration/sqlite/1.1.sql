@@ -27,3 +27,7 @@ create table rcreferrals_redeemed_codes (
   foreign key (code_id) references rcreferrals_promo_codes (id) on delete restrict on update restrict
 );
 
+alter table rcreferrals_referrals add column claimable int default 0 not null;
+
+alter table rcreferrals_players add column play_time integer default 0 not null;
+

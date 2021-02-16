@@ -25,6 +25,10 @@ create table rcreferrals_redeemed_codes (
   constraint pk_rcreferrals_redeemed_codes primary key (id)
 );
 
+alter table rcreferrals_referrals add column claimable tinyint(1) default 0 not null;
+
+alter table rcreferrals_players add column play_time bigint default 0 not null;
+
 create index ix_rcreferrals_redeemed_codes_player_id on rcreferrals_redeemed_codes (player_id);
 alter table rcreferrals_redeemed_codes add constraint fk_rcreferrals_redeemed_codes_player_id foreign key (player_id) references rcreferrals_players (id) on delete restrict on update restrict;
 

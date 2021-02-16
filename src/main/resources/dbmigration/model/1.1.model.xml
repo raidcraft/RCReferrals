@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
     <changeSet type="apply">
+        <createTable name="rcreferrals_promo_codes" identityType="external" pkName="pk_rcreferrals_promo_codes">
+            <column name="id" type="uuid" primaryKey="true" identity="true"/>
+            <column name="name" type="varchar"/>
+            <column name="description" type="varchar"/>
+            <column name="amount" type="integer" notnull="true"/>
+            <column name="start" type="timestamp"/>
+            <column name="end" type="timestamp"/>
+            <column name="enabled" type="boolean" defaultValue="false" notnull="true"/>
+            <column name="rewards" type="json" defaultValue="'[]'"/>
+            <column name="version" type="bigint" notnull="true"/>
+            <column name="when_created" type="timestamp" notnull="true"/>
+            <column name="when_modified" type="timestamp" notnull="true"/>
+            <uniqueConstraint name="uq_rcreferrals_promo_codes_name" columnNames="name" oneToOne="false" nullableColumns="name"/>
+        </createTable>
+        <createTable name="rcreferrals_redeemed_codes" identityType="external" pkName="pk_rcreferrals_redeemed_codes">
+            <column name="id" type="uuid" primaryKey="true" identity="true"/>
+            <column name="player_id" type="uuid" references="rcreferrals_players.id" foreignKeyName="fk_rcreferrals_redeemed_codes_player_id" foreignKeyIndex="ix_rcreferrals_redeemed_codes_player_id"/>
+            <column name="code_id" type="uuid" references="rcreferrals_promo_codes.id" foreignKeyName="fk_rcreferrals_redeemed_codes_code_id" foreignKeyIndex="ix_rcreferrals_redeemed_codes_code_id"/>
+            <column name="version" type="bigint" notnull="true"/>
+            <column name="when_created" type="timestamp" notnull="true"/>
+            <column name="when_modified" type="timestamp" notnull="true"/>
+        </createTable>
         <addColumn tableName="rcreferrals_referrals">
             <column name="claimable" type="boolean" defaultValue="false" notnull="true"/>
         </addColumn>
         <addColumn tableName="rcreferrals_players">
-            <column name="play_time" type="bigint" notnull="true"/>
+            <column name="play_time" type="bigint" defaultValue="0" notnull="true"/>
         </addColumn>
     </changeSet>
 </migration>
