@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/raidcraft/rcreferrals/compare/v1.3.3...v1.4.0) (2021-02-16)
+
+
+### Features
+
+* add promo code models ([ba457bd](https://github.com/raidcraft/rcreferrals/commit/ba457bdacc15b8e60fcb14f3d0d8b4bd3e8be3b0))
+
 ## [1.3.3](https://github.com/raidcraft/rcreferrals/compare/v1.3.2...v1.3.3) (2021-02-14)
 
 
