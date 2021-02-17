@@ -1,3 +1,11 @@
+## [1.5.2](https://github.com/raidcraft/rcreferrals/compare/v1.5.1...v1.5.2) (2021-02-17)
+
+
+### Bug Fixes
+
+* code rewards admin command not working ([6954c86](https://github.com/raidcraft/rcreferrals/commit/6954c86cbb7b4380473b17d522c8ec1d3a75babf))
+* improve code success message ([07503fb](https://github.com/raidcraft/rcreferrals/commit/07503fbf45f0236e7e8064f302170f2282b2d92d))
+
 ## [1.5.1](https://github.com/raidcraft/rcreferrals/compare/v1.5.0...v1.5.1) (2021-02-16)
 
 
