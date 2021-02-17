@@ -148,11 +148,17 @@ public class PlayerCommands extends BaseCommand {
         if (!code.enabled()) {
             throw new ConditionFailedException("Du kannst diesen Code nicht einlösen.");
         }
+
         if (Instant.now().isBefore(code.start())) {
             throw new ConditionFailedException("Du kannst diesen Code erst ab dem " + TimeUtil.formatDateTime(code.start()) + " einlösen.");
         }
+
         if (Instant.now().isAfter(code.end())) {
             throw new ConditionFailedException("Der Code ist nicht mehr gültig und kann nicht eingelöst werden.");
+        }
+
+        if (code.amount() > 0 && code.redeemedCodes().size() > code.amount()) {
+            throw new ConditionFailedException("Der Code wurde bereits zu oft von anderen Spielern eingelöst und kann nicht mehr verwendet werden.");
         }
 
         if (Bukkit.getPluginManager().getPlugin("art-framework") != null) {

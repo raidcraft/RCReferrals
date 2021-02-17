@@ -140,7 +140,7 @@ public class AdminCommands extends BaseCommand {
 
         @Subcommand("rewards")
         @CommandPermission("rcreferrals.admin.code.rewards")
-        public class CodeRewards {
+        public class CodeRewards extends BaseCommand {
 
             @Subcommand("add")
             @CommandCompletion("@codes *")
