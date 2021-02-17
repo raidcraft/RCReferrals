@@ -182,8 +182,8 @@ public class PlayerCommands extends BaseCommand {
                 Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), reward);
             }
         }
-        getCurrentCommandIssuer().sendMessage(ChatColor.YELLOW + "Du hast den Code " + ChatColor.BOLD + ChatColor.AQUA + code.name()
-                + ChatColor.RESET + ChatColor.GREEN + " eingelöst" + ChatColor.YELLOW + "!");
+        getCurrentCommandIssuer().sendMessage(ChatColor.GREEN + "Herzlichen Glückwunsch! " + ChatColor.YELLOW + "Du hast den Code " + ChatColor.BOLD + ChatColor.AQUA + code.name()
+                + ChatColor.RESET + ChatColor.GREEN + " eingelöst" + ChatColor.YELLOW + ".");
 
     }
 
