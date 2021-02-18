@@ -1,3 +1,10 @@
+## [1.5.4](https://github.com/raidcraft/rcreferrals/compare/v1.5.3...v1.5.4) (2021-02-18)
+
+
+### Bug Fixes
+
+* **code:** npe when start or end is not set ([caab029](https://github.com/raidcraft/rcreferrals/commit/caab029ff35b3b51d5b1fd108c2838cda1eb8a30))
+
 ## [1.5.3](https://github.com/raidcraft/rcreferrals/compare/v1.5.2...v1.5.3) (2021-02-18)
 
 
