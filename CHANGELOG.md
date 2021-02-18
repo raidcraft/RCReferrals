@@ -1,3 +1,10 @@
+## [1.5.3](https://github.com/raidcraft/rcreferrals/compare/v1.5.2...v1.5.3) (2021-02-18)
+
+
+### Bug Fixes
+
+* code art-rewards are not executed ([63b2d9c](https://github.com/raidcraft/rcreferrals/commit/63b2d9c73188c0f51ec62bb581366c7f1579b59a))
+
 ## [1.5.2](https://github.com/raidcraft/rcreferrals/compare/v1.5.1...v1.5.2) (2021-02-17)
 
 
