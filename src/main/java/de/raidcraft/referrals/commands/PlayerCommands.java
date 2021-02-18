@@ -140,7 +140,8 @@ public class PlayerCommands extends BaseCommand {
             return;
         }
 
-        ReferralPlayer player = ReferralPlayer.of(getCurrentCommandIssuer().getIssuer());
+        Player bukkitPlayer = getCurrentCommandIssuer().getIssuer();
+        ReferralPlayer player = ReferralPlayer.of(bukkitPlayer);
         if (code.hasCode(player)) {
             throw new ConditionFailedException("Du hast diesen Code bereits eingelöst.");
         }
@@ -164,7 +165,7 @@ public class PlayerCommands extends BaseCommand {
         if (Bukkit.getPluginManager().getPlugin("art-framework") != null) {
             try {
                 ART.load(code.id().toString(), code.rewards())
-                        .execute(getCurrentCommandIssuer().getIssuer());
+                        .execute(bukkitPlayer);
                 player.addCode(code);
             } catch (ParseException e) {
                 plugin.getLogger().warning("cannot load rewards of code " + code.name());
@@ -176,7 +177,7 @@ public class PlayerCommands extends BaseCommand {
             Plugin placeholderAPI = Bukkit.getPluginManager().getPlugin("PlaceholderAPI");
             List<String> rewards = code.rewards();
             if (placeholderAPI != null) {
-                rewards = PlaceholderAPI.setPlaceholders(getCurrentCommandIssuer().getIssuer(), rewards);
+                rewards = PlaceholderAPI.setPlaceholders(bukkitPlayer, rewards);
             }
             for (String reward : rewards) {
                 Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), reward);
