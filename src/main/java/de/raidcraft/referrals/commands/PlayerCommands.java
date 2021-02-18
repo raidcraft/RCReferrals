@@ -150,11 +150,11 @@ public class PlayerCommands extends BaseCommand {
             throw new ConditionFailedException("Du kannst diesen Code nicht einlösen.");
         }
 
-        if (Instant.now().isBefore(code.start())) {
+        if (code.start() != null && Instant.now().isBefore(code.start())) {
             throw new ConditionFailedException("Du kannst diesen Code erst ab dem " + TimeUtil.formatDateTime(code.start()) + " einlösen.");
         }
 
-        if (Instant.now().isAfter(code.end())) {
+        if (code.end() != null && Instant.now().isAfter(code.end())) {
             throw new ConditionFailedException("Der Code ist nicht mehr gültig und kann nicht eingelöst werden.");
         }
 
