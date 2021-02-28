@@ -2,6 +2,8 @@ package de.raidcraft.referrals;
 
 import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.PaperCommandManager;
+import com.djrapitops.plan.extension.DataExtension;
+import com.djrapitops.plan.extension.ExtensionService;
 import com.google.common.base.Strings;
 import de.raidcraft.referrals.art.ReferralCountRequirement;
 import de.raidcraft.referrals.art.ReferralTrigger;
@@ -14,6 +16,7 @@ import de.raidcraft.referrals.entities.ReferralPlayer;
 import de.raidcraft.referrals.entities.ReferralType;
 import de.raidcraft.referrals.listener.PlayerListener;
 import de.raidcraft.referrals.listener.RewardListener;
+import de.raidcraft.referrals.plan.ReferralDataExtension;
 import io.artframework.Scope;
 import io.artframework.annotations.ArtModule;
 import io.artframework.annotations.OnEnable;
@@ -84,6 +87,9 @@ public class RCReferrals extends JavaPlugin {
         setupReferralManager();
         setupListener();
         setupCommands();
+        if (!isTesting()) {
+            setupPlayerAnalytics();
+        }
     }
 
     @OnLoad
@@ -116,6 +122,20 @@ public class RCReferrals extends JavaPlugin {
         getDataFolder().mkdirs();
         pluginConfig = new PluginConfig(new File(getDataFolder(), "config.yml").toPath());
         pluginConfig.loadAndSave();
+    }
+
+    private void setupPlayerAnalytics() {
+        try {
+
+            DataExtension yourExtension = new ReferralDataExtension();
+            ExtensionService.getInstance().register(yourExtension);
+        } catch (NoClassDefFoundError planIsNotInstalled) {
+            // Plan is not installed, handle exception
+        } catch (IllegalStateException planIsNotEnabled) {
+            // Plan is not enabled, handle exception
+        } catch (IllegalArgumentException dataExtensionImplementationIsInvalid) {
+            dataExtensionImplementationIsInvalid.printStackTrace();
+        }
     }
 
     private void setupListener() {
