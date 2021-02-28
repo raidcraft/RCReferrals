@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/raidcraft/rcreferrals/compare/v1.5.4...v1.6.0) (2021-02-28)
+
+
+### Features
+
+* add new referral plan data extension ([48f552c](https://github.com/raidcraft/rcreferrals/commit/48f552c86ad60419ba1426f91eb5da894526d16a))
+
 ## [1.5.4](https://github.com/raidcraft/rcreferrals/compare/v1.5.3...v1.5.4) (2021-02-18)
 
 
