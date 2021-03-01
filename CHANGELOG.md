@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/raidcraft/rcreferrals/compare/v1.6.0...v1.6.1) (2021-03-01)
+
+
+### Bug Fixes
+
+* **plan:** show referral type and player in player table ([d178509](https://github.com/raidcraft/rcreferrals/commit/d17850904673f62c0767d1d0c30427ea450baeca))
+
 # [1.6.0](https://github.com/raidcraft/rcreferrals/compare/v1.5.4...v1.6.0) (2021-02-28)
 
 
