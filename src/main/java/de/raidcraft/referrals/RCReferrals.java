@@ -41,6 +41,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @PluginMain
@@ -126,15 +127,10 @@ public class RCReferrals extends JavaPlugin {
 
     private void setupPlayerAnalytics() {
         try {
-
             DataExtension yourExtension = new ReferralDataExtension();
             ExtensionService.getInstance().register(yourExtension);
-        } catch (NoClassDefFoundError planIsNotInstalled) {
-            // Plan is not installed, handle exception
-        } catch (IllegalStateException planIsNotEnabled) {
-            // Plan is not enabled, handle exception
-        } catch (IllegalArgumentException dataExtensionImplementationIsInvalid) {
-            dataExtensionImplementationIsInvalid.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
