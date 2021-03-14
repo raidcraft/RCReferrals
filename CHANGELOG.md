@@ -1,3 +1,10 @@
+## [1.6.2](https://github.com/raidcraft/rcreferrals/compare/v1.6.1...v1.6.2) (2021-03-14)
+
+
+### Bug Fixes
+
+* catch all plan enable exceptions ([f299847](https://github.com/raidcraft/rcreferrals/commit/f299847164e29898c58cacf2f43212a321322b02))
+
 ## [1.6.1](https://github.com/raidcraft/rcreferrals/compare/v1.6.0...v1.6.1) (2021-03-01)
 
 
