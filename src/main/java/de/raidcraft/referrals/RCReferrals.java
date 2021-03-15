@@ -2,21 +2,15 @@ package de.raidcraft.referrals;
 
 import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.PaperCommandManager;
-import com.djrapitops.plan.extension.DataExtension;
-import com.djrapitops.plan.extension.ExtensionService;
 import com.google.common.base.Strings;
 import de.raidcraft.referrals.art.ReferralCountRequirement;
 import de.raidcraft.referrals.art.ReferralTrigger;
 import de.raidcraft.referrals.commands.AdminCommands;
 import de.raidcraft.referrals.commands.PlayerCommands;
-import de.raidcraft.referrals.entities.PromoCode;
-import de.raidcraft.referrals.entities.RedeemedCode;
-import de.raidcraft.referrals.entities.Referral;
-import de.raidcraft.referrals.entities.ReferralPlayer;
-import de.raidcraft.referrals.entities.ReferralType;
+import de.raidcraft.referrals.entities.*;
 import de.raidcraft.referrals.listener.PlayerListener;
 import de.raidcraft.referrals.listener.RewardListener;
-import de.raidcraft.referrals.plan.ReferralDataExtension;
+import de.raidcraft.referrals.plan.PlanHook;
 import io.artframework.Scope;
 import io.artframework.annotations.ArtModule;
 import io.artframework.annotations.OnEnable;
@@ -41,7 +35,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @PluginMain
@@ -62,6 +55,7 @@ public class RCReferrals extends JavaPlugin {
     private ReferralManager referralManager;
     private PaperCommandManager commandManager;
     private PlayerListener playerListener;
+    private PlanHook planHook;
     @Getter
     @Setter(AccessLevel.PACKAGE)
     private RewardListener rewardListener;
@@ -126,12 +120,9 @@ public class RCReferrals extends JavaPlugin {
     }
 
     private void setupPlayerAnalytics() {
-        try {
-            DataExtension yourExtension = new ReferralDataExtension();
-            ExtensionService.getInstance().register(yourExtension);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        planHook = new PlanHook();
+        planHook.hookIntoPlan();
     }
 
     private void setupListener() {
