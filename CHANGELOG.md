@@ -1,3 +1,10 @@
+## [1.6.3](https://github.com/raidcraft/rcreferrals/compare/v1.6.2...v1.6.3) (2021-03-15)
+
+
+### Bug Fixes
+
+* use separate plan hook class to avoid noclassdef error ([9a4a7a3](https://github.com/raidcraft/rcreferrals/commit/9a4a7a343bf1eef8a258a02936d1ead831e1d793)), closes [#37](https://github.com/raidcraft/rcreferrals/issues/37)
+
 ## [1.6.2](https://github.com/raidcraft/rcreferrals/compare/v1.6.1...v1.6.2) (2021-03-14)
 
 
