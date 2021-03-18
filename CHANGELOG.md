@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/raidcraft/rcreferrals/compare/v1.6.3...v1.7.0) (2021-03-18)
+
+
+### Features
+
+* improve plan data extension ([48445c6](https://github.com/raidcraft/rcreferrals/commit/48445c6f450a7c5f3444dbd5273a78c9c51e627c))
+
 ## [1.6.3](https://github.com/raidcraft/rcreferrals/compare/v1.6.2...v1.6.3) (2021-03-15)
 
 
