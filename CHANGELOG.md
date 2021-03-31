@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/raidcraft/rcreferrals/compare/v1.7.0...v1.7.1) (2021-03-31)
+
+
+### Bug Fixes
+
+* print all exceptions when registering plan ([7dc48f2](https://github.com/raidcraft/rcreferrals/commit/7dc48f292edb27344d42c78d0d54a832a0754f33))
+
 # [1.7.0](https://github.com/raidcraft/rcreferrals/compare/v1.6.3...v1.7.0) (2021-03-18)
 
 
