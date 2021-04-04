@@ -1,3 +1,10 @@
+## [1.7.2](https://github.com/raidcraft/rcreferrals/compare/v1.7.1...v1.7.2) (2021-04-04)
+
+
+### Bug Fixes
+
+* **plan:** return long for number provider instead of int ([aef0e29](https://github.com/raidcraft/rcreferrals/commit/aef0e29c28088bba9d35442f9c33bd9c5a444f15))
+
 ## [1.7.1](https://github.com/raidcraft/rcreferrals/compare/v1.7.0...v1.7.1) (2021-03-31)
 
 
