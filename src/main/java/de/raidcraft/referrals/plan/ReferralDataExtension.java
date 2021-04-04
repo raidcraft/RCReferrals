@@ -75,7 +75,7 @@ public class ReferralDataExtension implements DataExtension {
             iconColor = Color.NONE,
             showInPlayerTable = true
     )
-    public int referralCount(UUID playerUUID) {
+    public long referralCount(UUID playerUUID) {
 
         Optional<ReferralPlayer> player = ReferralPlayer.byId(playerUUID);
         if (player.isEmpty()) return 0;
